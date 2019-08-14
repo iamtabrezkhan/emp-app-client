@@ -1,0 +1,26 @@
+<div class="form-main login">
+    <div class="title">Sign In</div>
+    <div class="form-container">
+        <form
+            novalidate
+            [formGroup]="logInForm"
+            (ngSubmit)="onSubmit($event)"
+            >
+            <input [class.success]="email.status === 'VALID'" type="email" formControlName="email" placeholder="Email Address">
+            <ng-container *ngIf="email.errors" >
+                <div *ngIf="email.errors.pattern || (email.touched && email.errors.required)" class="error-box">Invalid email</div>
+            </ng-container>
+            <input [class.success]="password.status === 'VALID'" type="password" formControlName="password" placeholder="Password">
+            <ng-container *ngIf="password.errors" >
+                <ng-container *ngIf="password.errors.minlength" >
+                    <div *ngIf="password.errors.minlength.actualLength < password.errors.minlength.requiredLength || (password.touched && password.errors.required)" class="error-box">Password should be of minimum {{password.errors.minlength.requiredLength}} characters</div>
+                </ng-container>
+            </ng-container>
+            <button type="submit">Log In</button>
+        </form>
+        <div *ngIf="error || (logInForm.invalid && logInForm.touched)" class="error-box">{{errorMsg}}</div>
+    </div>
+    <div class="box-2">
+        Not a member? <span (click)="goToSignUp()" >Sign Up</span>
+    </div>
+</div>

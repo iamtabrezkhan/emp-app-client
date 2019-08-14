@@ -1,0 +1,13 @@
+<div class="user-main">
+    <div class="search-box">
+        <input type="text" name="searchString" [(ngModel)]="searchString" placeholder="Search">
+    </div>
+    <div class="users-container">
+        <div *ngFor="let user of users | search:searchString" class="user">
+            <div class="name item">{{user.name}}</div>
+            <div class="id item">{{user._id}}</div>
+            <div class="department item">{{user.department}}</div>
+            <button (click)="viewUser(user.department, user._id)" >View</button>
+        </div>
+    </div>
+</div>

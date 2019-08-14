@@ -1,0 +1,44 @@
+<div class="form-main sign-up">
+    <div class="title">Sign Up</div>
+    <div class="form-container">
+        <form
+            novalidate
+            [formGroup]="signUpForm"
+            (ngSubmit)="onSubmit()"
+            >
+            <input [class.success]="name.status === 'VALID'" type="text" formControlName="name" placeholder="Name">
+            <ng-container *ngIf="name.errors" >
+                <div *ngIf="name.errors.required && name.touched" class="error-box">Required</div>
+            </ng-container>
+            <input [class.success]="email.status === 'VALID'" type="email" formControlName="email" placeholder="Email Address">
+            <ng-container *ngIf="email.errors" >
+                <div *ngIf="email.errors.pattern || (email.touched && email.errors.required)" class="error-box">Invalid email</div>
+            </ng-container>
+            <input [class.success]="password.status === 'VALID'" type="password" formControlName="password" placeholder="Password">
+            <ng-container *ngIf="password.errors" >
+                <ng-container *ngIf="password.errors.minlength" >
+                    <div *ngIf="password.errors.minlength.actualLength < password.errors.minlength.requiredLength || (password.touched && password.errors.required)" class="error-box">Password should be of minimum {{password.errors.minlength.requiredLength}} characters</div>
+                </ng-container>
+            </ng-container>
+            <input [class.success]="phone.status === 'VALID'" type="text" formControlName="phone" placeholder="Phone">
+            <ng-container *ngIf="phone.errors" >
+                <div *ngIf="phone.errors.pattern || (phone.touched && phone.errors.required)" class="error-box">Invalid phone number</div>
+            </ng-container>
+            <select class=""
+                formControlName="department">
+            <option value="">Please select a department</option>
+            <option *ngFor="let dep of departments"
+                    [value]="dep">{{dep}}
+            </option>
+            </select>
+            <ng-container *ngIf="department.errors" >
+                <div *ngIf="department.touched && department.errors.required" class="error-box">Please select a value</div>
+            </ng-container>
+            <button type="submit">Sign Up</button>
+        </form>
+        <div *ngIf="error || (signUpForm.invalid && signUpForm.touched)" class="error-box">{{errorMsg}}</div>
+    </div>
+    <div class="box-2">
+        Already a member? <span (click)="goToLogin()" >Sign In</span>
+    </div>
+</div>
